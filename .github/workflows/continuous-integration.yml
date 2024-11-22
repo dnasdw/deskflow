@@ -218,7 +218,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          if [[ "$RUNNER_OS" != "Windows" && "${{matrix.target.like}}" != "arch" ]]; then
+          if [[ "${{matrix.target.like}}" != "arch" ]]; then
             cmake --build build -j8 --target package
           else
             cmake --build build -j8
@@ -241,15 +241,11 @@ jobs:
         with:
           job: ${{ matrix.target.name }}
 
-      - name: Package
-        if: ${{ runner.os == 'Windows' }}
-        shell: bash
-        run: |
-          python ./scripts/package.py --package-version ${{env.DESKFLOW_PACKAGE_VERSION}}
-          mv dist/deskflow* build/
-        env:
-          WINDOWS_PFX_CERTIFICATE: ${{ secrets.WINDOWS_PFX }}
-          WINDOWS_PFX_PASSWORD: ${{ secrets.WINDOWS_PFX_PASS }}
+# When we are ready to try signing on windows
+#      - name: Sign Package
+#        if: ${{ runner.os == 'Windows' }}
+#        run: |
+#          signtool sign -f ${{ secrets.WINDOWS_PFX }}  -p '${{ secrets.WINDOWS_PFX_PASS }}' -t http://timestamp.digicert.com -fd SHA256 ${{github.workspace}}/build/deskflow-*.msi
 
       - name: Upload
         uses: actions/upload-artifact@v4

@@ -70,16 +70,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
   set(CPACK_WIX_UPGRADE_GUID "027D1C8A-E7A5-4754-BB93-B2D45BFDBDC8")
 
-  # TODO RM with legacy WIX Builder
-  cmake_path(SET QT_PATH NORMALIZE "${Qt6_DIR}../../")
-
-  # TODO RM with legacy WIX Builder
-  configure_files(
-    ${PROJECT_SOURCE_DIR}/deploy/dist/wix
-    ${PROJECT_BINARY_DIR}/installer
-  )
-
-set(CPACK_WIX_UI_BANNER "${CMAKE_CURRENT_SOURCE_DIR}/wix-banner.png")
+  set(CPACK_WIX_UI_BANNER "${CMAKE_CURRENT_SOURCE_DIR}/wix-banner.png")
   set(CPACK_WIX_UI_DIALOG "${CMAKE_CURRENT_SOURCE_DIR}/wix-dialog.png")
 
   # Required Extra Extenstions
